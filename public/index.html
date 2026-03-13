@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AGI Valuation Command</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #050505; color: white; }
+        .agi-glow { box-shadow: 0 0 30px rgba(6, 182, 212, 0.2); }
+    </style>
+</head>
+<body class="p-12">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl font-bold mb-12 italic tracking-widest text-zinc-200">AGI VALUATION COMMAND</h1>
+        
+        <div class="bg-zinc-900 p-12 rounded-3xl border border-zinc-800 agi-glow mb-6">
+            <p class="text-zinc-500 uppercase text-xs tracking-widest mb-4">Total Revenue Captured</p>
+            <h2 id="rev" class="text-7xl font-mono font-bold">$0.00</h2>
+        </div>
+
+        <div class="bg-zinc-900 p-8 rounded-2xl border border-zinc-800">
+            <p class="text-zinc-500 uppercase text-xs tracking-widest mb-2">AGI Valuation Uplift</p>
+            <h2 id="uplift" class="text-4xl font-bold text-green-500 font-mono">+$0.00</h2>
+        </div>
+
+        <div class="flex justify-center items-center space-x-3 mt-12">
+            <div class="h-3 w-3 bg-cyan-500 rounded-full animate-ping"></div>
+            <p class="text-cyan-500 uppercase text-xs font-bold tracking-widest">System Dominant</p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchStats() {
+            try {
+                const r = await fetch('/api/valuation-stats');
+                const d = await r.json();
+                
+                const revenue = Number(d.totalRevenue);
+                document.getElementById('rev').innerText = "$" + revenue.toLocaleString(undefined, {minimumFractionDigits: 2});
+
+                // THE WEALTH MULTIPLIER MATH
+                const sde = revenue * 0.25; 
+                const legacyVal = sde * 2.5;
+                const agiVal = sde * 4.0;
+                const uplift = agiVal - legacyVal;
+
+                document.getElementById('uplift').innerText = "+" + uplift.toLocaleString(undefined, {minimumFractionDigits: 2});
+            } catch (e) { console.log("Awaiting Data..."); }
+        }
+        setInterval(fetchStats, 2000);
+        fetchStats();
+    </script>
+</body>
+</html>
