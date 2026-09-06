@@ -1,0 +1,38 @@
+name: Node.js CI & Audit Governance
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  audit-governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify audit.log is ignored
+        run: |
+          if git ls-files | grep audit.log; then
+            echo "❌ audit.log should not be committed"
+            exit 1
+          else
+            echo "✅ audit.log is ignored"
+          fi
