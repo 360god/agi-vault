@@ -78,8 +78,8 @@ Contributing
 - See CONTRIBUTING.md for contribution workflow, required checks, and security checklist for changes that add token usage or integrations.
 
 Support & contact
-- For security issues: see SECURITY.md or email security@absoluteglobalintel.example
-- For general help: open an issue or contact the maintainers at maintainers@absoluteglobalintel.example
+- For security issues: see SECURITY.md or email absolute360global@gmail.com
+- For general help: open an issue or contact the maintainers at absolute360global@gmail.com
 
 Recommended next steps (repo hygiene)
 - Add these repository files if missing:

@@ -19,4 +19,4 @@ Issue & PR templates
 - Use .github/ISSUE_TEMPLATE and .github/PULL_REQUEST_TEMPLATE to capture necessary info: summary, steps to reproduce, security impact, and checklist.
 
 Contact
-- For questions about contributing, email maintainers@absoluteglobalintel.example
+- For questions about contributing, email absolute360global@gmail.com

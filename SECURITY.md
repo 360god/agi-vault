@@ -1,7 +1,7 @@
 # Security policy
 
 Contact
-- If you discover a security vulnerability, please email security@absoluteglobalintel.example or open a private security issue.
+- If you discover a security vulnerability, please email absolute360global@gmail.com or open a private security issue.
 
 Guidelines
 - Do not include secrets in issues or public PRs.
