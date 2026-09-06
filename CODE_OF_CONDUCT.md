@@ -1,0 +1,3 @@
+# Contributor Covenant Code of Conduct
+
+This project follows the Contributor Covenant. Be respectful and collaborative. Report conduct issues to the maintainers at maintainers@absoluteglobalintel.example.
