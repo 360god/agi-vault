@@ -1,0 +1,11 @@
+project-root/
+├── server.js              # Your main backend entrypoint
+├── auditLogger.js         # The module you pasted (AuditLogger class + logAudit)
+├── logs/                  # Auto-created directory for runtime logs
+│   └── audit.log          # Append-only log file (generated at runtime)
+├── public/                # Static assets served to browser
+│   ├── index.html         # Frontend entrypoint
+│   ├── css/               # Stylesheets
+│   ├── js/                # Client-side scripts
+│   └── audit-viewer.html  # Optional viewer for audit logs (read-only UI)
+└── .gitignore             # Ensure audit.log is ignored
