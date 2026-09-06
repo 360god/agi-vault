@@ -1,0 +1,95 @@
+<div id="founderView" style="display:none;">
+  <h2>Founder Controls</h2>
+  <form id="updateForm">
+    <label>Cash: <input type="number" id="cash" /></label><br>
+    <label>Monthly Burn: <input type="number" id="burn" /></label><br>
+    <label>Revenue Year: <input type="number" id="revYear" /></label><br>
+    <label>Revenue Amount: <input type="number" id="revAmount" /></label><br>
+    <button type="submit">Update</button>
+  </form>
+</div>
+
+<div id="opsView" style="display:none;">
+  <h2>Ops Controls</h2>
+  <form id="burnForm">
+    <label>Monthly Burn: <input type="number" id="opsBurn" /></label><br>
+    <button type="submit">Update Burn</button>
+  </form>
+</div>
+
+<div id="investorView" style="display:none;">
+  <h2>Investor Dashboard</h2>
+  <p>Read‑only valuation and charts below.</p>
+</div>
+
+<script>
+  let token = null;
+  let role = null;
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      token = data.token;
+      role = data.role;
+      document.getElementById('roleDisplay').innerText = `Logged in as: ${role}`;
+
+      // Show role‑specific view
+      if (role === "founder") document.getElementById('founderView').style.display = "block";
+      if (role === "ops") document.getElementById('opsView').style.display = "block";
+      if (role === "investor") document.getElementById('investorView').style.display = "block";
+    } else {
+      alert('Login failed');
+    }
+  });
+
+  // Founder update form
+  document.getElementById('updateForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!token) return alert('You must log in first');
+    const cash = document.getElementById('cash').value;
+    const burn = document.getElementById('burn').value;
+    const revYear = document.getElementById('revYear').value;
+    const revAmount = document.getElementById('revAmount').value;
+
+    if (cash) await fetch('/api/update/agi-core/cash', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ amount: Number(cash) })
+    });
+
+    if (burn) await fetch('/api/update/agi-core/burn', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ amount: Number(burn) })
+    });
+
+    if (revYear && revAmount) await fetch('/api/update/agi-core/revenue', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ year: Number(revYear), amount: Number(revAmount) })
+    });
+
+    alert('Ledger updated!');
+  });
+
+  // Ops burn form
+  document.getElementById('burnForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!token) return alert('You must log in first');
+    const burn = document.getElementById('opsBurn').value;
+
+    if (burn) await fetch('/api/update/agi-core/burn', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ amount: Number(burn) })
+    });
+
+    alert('Burn updated!');
+  });
+</script>
