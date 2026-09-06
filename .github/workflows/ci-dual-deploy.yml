@@ -23,6 +23,15 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Debug workspace
+        run: |
+          echo "Git ref: $GITHUB_REF"
+          echo "Runner OS: $RUNNER_OS"
+          pwd
+          ls -la
+          ls -la path/to/project || true
+          env | sort
+
       - name: Install dependencies
         run: npm install
 
